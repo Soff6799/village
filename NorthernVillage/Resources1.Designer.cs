@@ -63,6 +63,16 @@ namespace NorthernVillage {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap snowFlake {
+            get {
+                object obj = ResourceManager.GetObject("snowFlake", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap villageSNOW {
             get {
                 object obj = ResourceManager.GetObject("villageSNOW", resourceCulture);
