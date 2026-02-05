@@ -39,7 +39,7 @@ namespace NorthernVillage
         }
     }
 
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         //Маг числа
         private const int MinSnowFlakeSize = 8;
@@ -54,11 +54,11 @@ namespace NorthernVillage
         private readonly Image _snowflakeImage;
         private readonly Random _rnd = new Random();
         
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-            this.BackgroundImage = NorthernVillage.Resources1.villageSNOW;
-            this.BackgroundImageLayout = ImageLayout.Stretch;
+            BackgroundImage = NorthernVillage.Resources1.villageSNOW;
+            BackgroundImageLayout = ImageLayout.Stretch;
             _snowflakeImage = NorthernVillage.Resources1.snowFlake;
             
             _flakes = new List<SnowFlake>(FlakesCount);
@@ -70,8 +70,8 @@ namespace NorthernVillage
                 var sizeVal = _rnd.Next(minSize, maxSize+1);
                 var flakeSize = new Size(sizeVal, sizeVal);
                 var fallSpeed = Math.Max(MinFallSpeed, sizeVal / SpeedDivider);
-                var x = _rnd.Next(0, Math.Max(1, this.ClientSize.Width - flakeSize.Width));
-                var y = _rnd.Next(-this.ClientSize.Height, this.ClientSize.Height);
+                var x = _rnd.Next(0, Math.Max(1, ClientSize.Width - flakeSize.Width));
+                var y = _rnd.Next(-ClientSize.Height, ClientSize.Height);
                 _flakes.Add(new SnowFlake(new Point(x, y), flakeSize, fallSpeed));
             }
             
@@ -80,15 +80,15 @@ namespace NorthernVillage
             _timer.Tick += Timer_Tick;
             _timer.Start();
 
-            this.KeyPreview = true;
-            this.KeyDown += Form1_KeyDown;
+            KeyPreview = true;
+            KeyDown += MainForm_KeyDown;
         }
 
         private void RenderScene(Graphics g)
         {
-            if (this.BackgroundImage != null)
+            if (BackgroundImage != null)
             {
-                g.DrawImage(this.BackgroundImage, this.ClientRectangle);
+                g.DrawImage(BackgroundImage, ClientRectangle);
             }
 
             foreach (var flake in _flakes)
@@ -99,8 +99,8 @@ namespace NorthernVillage
 
         private void Timer_Tick(object? sender, EventArgs e) 
         {
-            var formHeight = this.ClientRectangle.Height; 
-            var formWidth = this.ClientRectangle.Width;
+            var formHeight = ClientRectangle.Height; 
+            var formWidth = ClientRectangle.Width;
             for (var i = 0; i < _flakes.Count; i++)
             {
                 _flakes[i].UpdatePosition(formHeight);
@@ -109,9 +109,9 @@ namespace NorthernVillage
                     _flakes[i].Position.X = _rnd.Next(0, formWidth);
                 }
             }
-            using (Graphics g = this.CreateGraphics())
+            using (Graphics g = CreateGraphics())
             {
-                using (BufferedGraphics buffer = BufferedGraphicsManager.Current.Allocate(g, this.ClientRectangle))
+                using (BufferedGraphics buffer = BufferedGraphicsManager.Current.Allocate(g, ClientRectangle))
                 {
                     RenderScene(buffer.Graphics);
                     buffer.Render(g);
@@ -119,9 +119,9 @@ namespace NorthernVillage
             }
         }
 
-        private void Form1_KeyDown(object? sender, KeyEventArgs e)
+        private void MainForm_KeyDown(object? sender, KeyEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

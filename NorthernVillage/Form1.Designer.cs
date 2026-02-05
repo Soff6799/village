@@ -1,6 +1,6 @@
 ﻿namespace NorthernVillage;
 
-partial class Form1
+partial class MainForm
 {
     /// <summary>
     ///  Required designer variable.
@@ -20,7 +20,6 @@ partial class Form1
 
         base.Dispose(disposing);
     }
-
     #region Windows Form Designer generated code
 
     /// <summary>
@@ -31,11 +30,13 @@ partial class Form1
     {
         SuspendLayout();
         // 
-        // Form1
+        // MainForm
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(800, 450);
+        BackColor = System.Drawing.SystemColors.ButtonFace;
+        ClientSize = new System.Drawing.Size(1300, 875);
+        StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
         Text = "Снегопад";
         ResumeLayout(false);
     }
