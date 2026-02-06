@@ -9,32 +9,35 @@ namespace NorthernVillage
         private const int SpeedDivider = 8;
         private const int MinFallSpeed = 1;
         private const int FlakesCount = 150;
+        private const int MinimumValueForXСoordinate = 0;
+        private const int MinimumPossibleWidth = 1;
+        private const int RandomRangeUpperBoundOffset = 1;
 
         private readonly List<SnowFlake> flakes;
         private readonly System.Windows.Forms.Timer timer;
         private readonly Image snowflakeImage;
         private readonly Random rnd = new();
-
+        
         /// <summary>
         /// инициализирует новый экземпляр класса MainForm и настраивает логику со снежинками.
         /// </summary>
         public MainForm()
         {
             InitializeComponent();
-            BackgroundImage = NorthernVillage.Resources1.villageSNOW;
+            BackgroundImage = NorthernVillage.Resources.villageSNOW;
             BackgroundImageLayout = ImageLayout.Stretch;
-            snowflakeImage = NorthernVillage.Resources1.snowFlake;
+            snowflakeImage = NorthernVillage.Resources.snowFlake;
 
             flakes = new List<SnowFlake>(FlakesCount);
 
             var minSize = MinSnowFlakeSize;
             var maxSize = MaxSnowflakeSize;
-            for (var i = 0; i < FlakesCount; i++)
+            for (var cycleCounter = 0; cycleCounter < FlakesCount; cycleCounter++)
             {
-                var sizeVal = rnd.Next(minSize, maxSize + 1);
+                var sizeVal = rnd.Next(minSize, maxSize + RandomRangeUpperBoundOffset);
                 var flakeSize = new Size(sizeVal, sizeVal);
                 var fallSpeed = Math.Max(MinFallSpeed, sizeVal / SpeedDivider);
-                var x = rnd.Next(0, Math.Max(1, ClientSize.Width - flakeSize.Width));
+                var x = rnd.Next(MinimumValueForXСoordinate, Math.Max(MinimumPossibleWidth, ClientSize.Width - flakeSize.Width));
                 var y = rnd.Next(-ClientSize.Height, ClientSize.Height);
                 flakes.Add(new SnowFlake(new Point(x, y), flakeSize, fallSpeed));
             }
@@ -65,15 +68,15 @@ namespace NorthernVillage
         {
             var formHeight = ClientRectangle.Height;
             var formWidth = ClientRectangle.Width;
-            for (var i = 0; i < flakes.Count; i++)
+            for (var cycleCounter = 0; cycleCounter < flakes.Count; cycleCounter++)
             {
-                flakes[i].UpdatePosition(formHeight);
-                if (flakes[i].Position.Y <= -flakes[i].Size.Height + flakes[i].FallSpeed &&
-                    flakes[i].Position.Y >= -flakes[i].Size.Height)
+                flakes[cycleCounter].UpdatePosition(formHeight);
+                if (flakes[cycleCounter].Position.Y <= -flakes[cycleCounter].Size.Height + flakes[cycleCounter].FallSpeed &&
+                    flakes[cycleCounter].Position.Y >= -flakes[cycleCounter].Size.Height)
                 {
-                    Point currentPosition = flakes[i].Position;
+                    Point currentPosition = flakes[cycleCounter].Position;
                     currentPosition.X = rnd.Next(0, formWidth);
-                    flakes[i].Position = currentPosition;
+                    flakes[cycleCounter].Position = currentPosition;
                 }
             }
 
