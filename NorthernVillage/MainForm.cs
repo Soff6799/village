@@ -13,8 +13,11 @@ namespace NorthernVillage
         private readonly List<SnowFlake> flakes;
         private readonly System.Windows.Forms.Timer timer;
         private readonly Image snowflakeImage;
-        private readonly Random _rnd = new();
+        private readonly Random rnd = new();
 
+        /// <summary>
+        /// инициализирует новый экземпляр класса MainForm и настраивает логику со снежинками.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -28,21 +31,21 @@ namespace NorthernVillage
             var maxSize = MaxSnowflakeSize;
             for (var i = 0; i < FlakesCount; i++)
             {
-                var sizeVal = _rnd.Next(minSize, maxSize + 1);
+                var sizeVal = rnd.Next(minSize, maxSize + 1);
                 var flakeSize = new Size(sizeVal, sizeVal);
                 var fallSpeed = Math.Max(MinFallSpeed, sizeVal / SpeedDivider);
-                var x = _rnd.Next(0, Math.Max(1, ClientSize.Width - flakeSize.Width));
-                var y = _rnd.Next(-ClientSize.Height, ClientSize.Height);
+                var x = rnd.Next(0, Math.Max(1, ClientSize.Width - flakeSize.Width));
+                var y = rnd.Next(-ClientSize.Height, ClientSize.Height);
                 flakes.Add(new SnowFlake(new Point(x, y), flakeSize, fallSpeed));
             }
 
             timer = new System.Windows.Forms.Timer();
             timer.Interval = TimerIntervalMs;
-            timer.Tick += Timer_Tick;
+            timer.Tick += TimerTick;
             timer.Start();
 
             KeyPreview = true;
-            KeyDown += MainForm_KeyDown;
+            KeyDown += MainFormKeyDown;
         }
 
         private void RenderScene(Graphics g)
@@ -58,7 +61,7 @@ namespace NorthernVillage
             }
         }
 
-        private void Timer_Tick(object? sender, EventArgs e)
+        private void TimerTick(object? sender, EventArgs e)
         {
             var formHeight = ClientRectangle.Height;
             var formWidth = ClientRectangle.Width;
@@ -69,7 +72,7 @@ namespace NorthernVillage
                     flakes[i].Position.Y >= -flakes[i].Size.Height)
                 {
                     Point currentPosition = flakes[i].Position;
-                    currentPosition.X = _rnd.Next(0, formWidth);
+                    currentPosition.X = rnd.Next(0, formWidth);
                     flakes[i].Position = currentPosition;
                 }
             }
@@ -84,7 +87,7 @@ namespace NorthernVillage
             }
         }
 
-        private void MainForm_KeyDown(object? sender, KeyEventArgs e)
+        private void MainFormKeyDown(object? sender, KeyEventArgs e)
         {
             Close();
         }
