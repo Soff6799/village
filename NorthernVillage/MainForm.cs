@@ -1,5 +1,8 @@
 namespace NorthernVillage
 {
+    /// <summary>
+    /// Представляет одну снежинку на экране с её позицией, размером и скоростью падения.
+    /// </summary>
     internal class SnowFlake
     {
         /// <summary>
@@ -16,7 +19,7 @@ namespace NorthernVillage
         /// Скорость даления (пикселей за один такт таймера).
         /// </summary>
         public readonly int FallSpeed;
-
+        
         public SnowFlake(Point initialPosition, Size size, int fallSpeed)
         {
             Position = initialPosition;
