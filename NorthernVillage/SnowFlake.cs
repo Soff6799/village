@@ -40,6 +40,11 @@ public class SnowFlake
         }
     }
 
+    /// <summary>
+    /// Отрисовка снежинки на графическом контексте.
+    /// </summary>
+    /// <param name="g">Граф.контекст на котором будет отрисовка.</param>
+    /// <param name="snowflakeImage">Изображение для отрисовки снежинки.</param>
     public void Draw(Graphics g, Image snowflakeImage)
     { 
         g.DrawImage(snowflakeImage, new Rectangle(Position.X, Position.Y, Size.Width, Size.Height));
