@@ -20,7 +20,6 @@ partial class MainForm
 
         base.Dispose(disposing);
     }
-    #region Windows Form Designer generated code
 
     /// <summary>
     /// Required method for Designer support - do not modify
@@ -34,12 +33,11 @@ partial class MainForm
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        BackColor = System.Drawing.SystemColors.ButtonFace;
-        ClientSize = new System.Drawing.Size(1300, 875);
+        ClientSize = new System.Drawing.Size(1200, 850);
+        KeyPreview = true;
         StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-        Text = "Снегопад";
+        Text = "MainForm";
+        KeyDown += MainForm_KeyDown;
         ResumeLayout(false);
     }
-
-    #endregion
 }

@@ -46,9 +46,6 @@ namespace NorthernVillage
             timer.Interval = TimerIntervalMs;
             timer.Tick += TimerTick;
             timer.Start();
-
-            KeyPreview = true;
-            KeyDown += MainFormKeyDown;
         }
 
         private void RenderScene(Graphics g)
@@ -90,7 +87,10 @@ namespace NorthernVillage
             }
         }
 
-        private void MainFormKeyDown(object? sender, KeyEventArgs e)
+        /// <summary>
+        /// Инициализация закрытия формы.
+        /// </summary>
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             Close();
         }
