@@ -10,19 +10,19 @@ namespace NorthernVillage
         private const int MinFallSpeed = 1;
         private const int FlakesCount = 150;
 
-        private readonly List<SnowFlake> _flakes;
-        private readonly System.Windows.Forms.Timer _timer;
-        private readonly Image _snowflakeImage;
-        private readonly Random _rnd = new Random();
+        private readonly List<SnowFlake> flakes;
+        private readonly System.Windows.Forms.Timer timer;
+        private readonly Image snowflakeImage;
+        private readonly Random _rnd = new();
 
         public MainForm()
         {
             InitializeComponent();
             BackgroundImage = NorthernVillage.Resources1.villageSNOW;
             BackgroundImageLayout = ImageLayout.Stretch;
-            _snowflakeImage = NorthernVillage.Resources1.snowFlake;
+            snowflakeImage = NorthernVillage.Resources1.snowFlake;
 
-            _flakes = new List<SnowFlake>(FlakesCount);
+            flakes = new List<SnowFlake>(FlakesCount);
 
             var minSize = MinSnowFlakeSize;
             var maxSize = MaxSnowflakeSize;
@@ -33,13 +33,13 @@ namespace NorthernVillage
                 var fallSpeed = Math.Max(MinFallSpeed, sizeVal / SpeedDivider);
                 var x = _rnd.Next(0, Math.Max(1, ClientSize.Width - flakeSize.Width));
                 var y = _rnd.Next(-ClientSize.Height, ClientSize.Height);
-                _flakes.Add(new SnowFlake(new Point(x, y), flakeSize, fallSpeed));
+                flakes.Add(new SnowFlake(new Point(x, y), flakeSize, fallSpeed));
             }
 
-            _timer = new System.Windows.Forms.Timer();
-            _timer.Interval = TimerIntervalMs;
-            _timer.Tick += Timer_Tick;
-            _timer.Start();
+            timer = new System.Windows.Forms.Timer();
+            timer.Interval = TimerIntervalMs;
+            timer.Tick += Timer_Tick;
+            timer.Start();
 
             KeyPreview = true;
             KeyDown += MainForm_KeyDown;
@@ -52,9 +52,9 @@ namespace NorthernVillage
                 g.DrawImage(BackgroundImage, ClientRectangle);
             }
 
-            foreach (var flake in _flakes)
+            foreach (var flake in flakes)
             {
-                flake.Draw(g, _snowflakeImage);
+                flake.Draw(g, snowflakeImage);
             }
         }
 
@@ -62,15 +62,15 @@ namespace NorthernVillage
         {
             var formHeight = ClientRectangle.Height;
             var formWidth = ClientRectangle.Width;
-            for (var i = 0; i < _flakes.Count; i++)
+            for (var i = 0; i < flakes.Count; i++)
             {
-                _flakes[i].UpdatePosition(formHeight);
-                if (_flakes[i].Position.Y <= -_flakes[i].Size.Height + _flakes[i].FallSpeed &&
-                    _flakes[i].Position.Y >= -_flakes[i].Size.Height)
+                flakes[i].UpdatePosition(formHeight);
+                if (flakes[i].Position.Y <= -flakes[i].Size.Height + flakes[i].FallSpeed &&
+                    flakes[i].Position.Y >= -flakes[i].Size.Height)
                 {
-                    Point currentPosition = _flakes[i].Position;
+                    Point currentPosition = flakes[i].Position;
                     currentPosition.X = _rnd.Next(0, formWidth);
-                    _flakes[i].Position = currentPosition;
+                    flakes[i].Position = currentPosition;
                 }
             }
 
